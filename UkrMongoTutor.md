@@ -1,47 +1,3 @@
-```python
-# loading our google drive in order to use photos 
-from google.colab import drive
-drive.mount('/content/drive')
-```
-
-```python
-# class to display images 
-from IPython.display import Image
-```
-
-[**Девід Трейб**](https://medium.com/u/23afa685a28e?source=post_page-----
-aa140bea21ba----------------------)  створив
-[pixiedust_node](https://github.com/ibm-watson-data-lab/pixiedust_node)
-надбудову для Jupiter notebooks, яка дозволяє Node.js / JavaScript запускати
-всередині комірок ноутбука. Він побудований на популярній бібліотеці помічників
-PixieDust
-
-# Installing
-
-```python
-!pip install pixiedust
-!pip install pixiedust_node
-```
-
-Цей код може написати, що версія застаріла, і вам потрібно перезапустити
-**Runtime**
-
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/mongo.png')
-```
-
-```python
-import pixiedust_node
-```
-
-Виконайте команди js за допомогою **_%%node_**, Приклад:
-
-```python
-%%node
-var date = new Date();
-print(date);
-```
-
 # Встановлення Mongodb на Mac
 
 MongoDB - це база даних документів, яка належить до сімейства баз даних під
@@ -95,9 +51,89 @@ mongo
 ```
 Це запустить оболонку Mongo, яка є додатком для доступу до даних у MongoDB.
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/mongo.png')
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/mongo.png)
+
+# Встановлення Mongodb на Windows
+
+Перейдіть у [Центр завантажень MongoDB](https://www.mongodb.com/download-center/enterprise) -> виберіть у спадному меню **Windows x64** як свою операційну систему, а потім завантажте **файл .msi**.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/donwload_center.png)
+
+Після завантаження файлу **msi** на комп'ютер натисніть на завантажений файл.
+Тепер ви можете побачити майстра встановлення Windows для встановлення MongoDB-сервера на комп'ютер.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/Installation_wizard1.png)
+
+Клацніть **Next**. У наступному вікні прийміть ліцензійну угоду клієнта та натисніть кнопку **Next**.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/Installation_wizard2.png)
+
+Виберіть тип налаштування як **Complete**.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/Installation_wizard3.png)
+
+У цьому вікні збережіть усі налаштування за замовчуванням та натисніть **Next**.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/Installation_wizard4.png)
+
+У цьому вікні зніміть прапорець у полі **Install MongoDB Compass**. Інсталятор встановить **Community version** Compass, у якій бракує певної функціональності, яку ми будемо використовувати в цьому курсі.
+
+Натисність **Install**.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/Installation_wizard6.png)
+
+Натисніть кнопку **Finish** після того, як інсталятор успішно встановив **MongoDB Server** у вашій системі.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/Installation_wizard7.png)
+
+Тепер перейдіть до цього каталогу, щоб побачити виконувані файли, завантажені на ваш комп’ютер із сервером MongoDB Enterprise.
+
 ```
+C:\Program Files\MongoDB\Server\4.2\bin
+```
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/bin_directory.png)
+
+Далі ми встановимо шлях для оболонки mongo у змінних оточення, щоб ви могли запускати ці виконувані файли у своєму командному рядку, не маючи необхідності вказувати повний шлях. Не закривайте це вікно ще, оскільки ми повернемось до нього для копіювання шляху до каталогу бін.
+
+Введіть **Змінити змінні системного середовища** або **Edit the system environment variables** або **Изменение системных переменных среды**  на панелі пошуку Windows у нижньому лівому куті екрана.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/system_environment_variables.png)
+
+Натисніть на **Змінні середовища** або **Переменные среды** або **Environment variables**
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/system_properties.png)
+
+З'явиться нове вікно, де можна побачити **Користувацькі змінні** та **Системні змінні**.
+
+Двічі натисніть на **Path** під **Системними змінними**.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/environment_variables.png)
+
+У новому вікні ви можете побачити список шляхів, доданих до змінних оточення.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/list.png)
+
+Поверніться до каталогу bin та скопіюйте адресу.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/copy_path.png)
+
+У вікні **Редагування змінних середовищ** натисніть кнопку **Створити** та **вставте** повний шлях до каталогу бін, який ви щойно скопіювали у буфер обміну. Далі натисніть кнопку **ОК**, щоб зберегти зміни та закрити вікно.
+
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/add_path.png)
+
+Тепер ми перевіримо, чи вдало встановлено шлях для оболонки mongo.
+
+Відкрийте командний рядок, ввівши cmd у панель пошуку Windows.
+
+```
+mongo --nodb
+```
+Якщо все пройшло добре, ви могли б бачити щось подібне на екрані.
+```
+MongoDB shell version v4.2.3
+>
+```
+![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/mongo_nodb.png)
 
 # Тестування mongo
 Вставлення одна за одною команд:
@@ -111,10 +147,7 @@ db.users.save( { name: "Tom" } )
 db.users.find()
 ```
 
-
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/test1.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/test1.png)
 
 # Графічний Клієнт Compass
 click here to [download](https://www.mongodb.com/download-center/compass)
@@ -122,31 +155,20 @@ click here to [download](https://www.mongodb.com/download-center/compass)
 Після установки за посиланням ми встановлюємо нове З'єднання, усі поля
 встановлюються за замовчуванням.
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/compass1.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/compass1.png)
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/compass2.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/compass2.png)
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/compass3.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/compass3.png)
 
 # Зверніть увагу, що mongod повинен працювати, інакше Компас не під'єднається
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/connection.png')
-```
-
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/connection.png)
 
 # Перш ніж працювати з db & schemas, давайте розглянемо відмінності від інших
 типів db
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/difference.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/difference.png)
 
 На відміну від баз даних SQL, Mongodb не використовує пристрій таблиці з чітко
 визначеною кількістю стовпців і типів даних.
@@ -204,9 +226,7 @@ Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/difference.png')
 Припустимо, ми маємо моделювати структуру, яка містить списки розсилки та дані
 про людей. Приклад [тут](https://habr.com/ru/post/144798/)
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/model.png', width=400, height=200)
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/model.png)
 
 Наступні вимоги:
 * У людини може бути одна або кілька адрес електронної пошти;
@@ -359,13 +379,9 @@ groups = [
 
 Створіть колекцію people та додайте 4 документи
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/people1.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/people1.png)
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/people2.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/people2.png)
 
 ## Installation mongodb for node.js
 
@@ -522,9 +538,7 @@ filtered/)
 
 **Результат:** ми видалили `"convmonk@gmail.com"` і змінили `"address"` поля
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/remove1.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/remove1.png)
 
 # Mongoose ODM
 ## Installation
@@ -738,9 +752,7 @@ let promise = new Promise(function(resolve, reject) {
 виклику рішення (value) або на помилку при відхиленні виклику (error)
 
 
-```python
-Image('/content/drive/My Drive/Colab Notebooks/Mongodb/photos/promise.png')
-```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/promise.png)
 
 ```python
 function logger(doc) {
