@@ -195,7 +195,7 @@ Atlas - це також чудовий спосіб експериментува
 
 Оновіть свій білий список IP-адрес, щоб ваша програма могла спілкуватися з кластером. Перейдіть на вкладку "Network Access", а потім натисніть "Add IP Address".
 
-![[](https://university-courses.s3.amazonaws.com/M001/m001_ip_whitelisting0.png)
+![](https://university-courses.s3.amazonaws.com/M001/m001_ip_whitelisting0.png)
 
 На екрані з’явиться нове запит із запитом "Add Whitelist Entry". Клацніть на "Allow Access from Anywhere", а потім натисніть "Confirm".
 
@@ -219,6 +219,65 @@ _Зауважте, що ми зазвичай не рекомендуємо ві
 ![](https://s3.amazonaws.com/university-courses/M001/m001_user.png)
 
 Вітаємо вас зі створенням першого Atlas застосунку! Тепер у вас є база даних MongoDB, до якої ви можете отримати доступ з будь-якої точки світу.
+
+# Підключення до MongoDB за допомогою Compass
+
+Завантажте Compass з [центру завантаження MongoDB](https://www.mongodb.com/download-center/compass). Якщо ви вже встановлини Compass, тоді переконайтеся, що ви використовуєте останню (стабільну) версію Compass та при необхідності оновіть. НЕ завантажуйте та не встановлюйте версію "Community Edition Stable". Встановіть його та запустіть.
+
+Коли відкриється Компас, ви побачите сторінку під назвою "New Connection".
+![](https://university-courses.s3.amazonaws.com/M001/Compass_start_screen.png)
+
+Компас пропонує два способи підключення до розгортання:
+- Використання рядка з'єднання
+- Заповнення інформації про розгортання в окремих полях
+
+**Використання рядка з'єднання**
+
+Вставте цей рядок у поле рядка підключення та натисніть CONNECT.
+
+```
+mongodb+srv://student:mongodb-basics@cluster0-jxeqq.mongodb.net/test
+```
+Нагадуємо, що _student_ це логін _mongodb-basics_ це пароль до вашого облікового запису
+
+Додавайте цей рядок з'єднання як улюблений. Це дозволить легко підключитися до розгортання нашого класу MongoDB після закриття та перезавантаження компаса. 
+
+![](https://university-courses.s3.amazonaws.com/M001/Compass_add_favorite.png)
+
+**Заповнення інформації про розгортання в окремих полях**
+
+Якщо рядок підключення не працював для вас, ви можете вручну заповнити окремі поля та спробувати підключитись таким чином.
+
+Клацніть на _Fill in connection fields individually_:
+
+![](https://university-courses.s3.amazonaws.com/M001/Compass_fill_in_fields.png)
+
+Використовуйте наступну інформацію, щоб заповнити цю форму, але не натискайте "Connect", поки ви не додасте це як своє улюблене з'єднання.
+
+_Вкладка Hostname_
+
+**Hostname**: cluster0-shard-00-00-jxeqq.mongodb.net
+
+**Port**: 27017
+
+**Authentication**: Username / Password
+
+**Username**: student
+
+**Password**: mongodb-basics
+
+**Authentication Database**: admin
+
+
+![](https://university-courses.s3.amazonaws.com/M001/Compass_hostname_connection.png)
+
+Вкладка _More Options_
+
+**Replica Set Name**: Cluster0-shard-0
+
+**Read Preference**: Primary Preferred
+
+![](https://university-courses.s3.amazonaws.com/M001/Compass_more_options_connection.png)
 
 # Тестування mongo
 Вставлення одна за одною команд:
