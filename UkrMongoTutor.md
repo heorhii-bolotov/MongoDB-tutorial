@@ -279,6 +279,103 @@ _Вкладка Hostname_
 
 ![](https://university-courses.s3.amazonaws.com/M001/Compass_more_options_connection.png)
 
+# Базові команди для роботи з MongoDB
+
+**db.collection.insertOne()**
+
+Призначення: Вставляє документ у колекцію.
+
+Синтаксис:
+```
+db.collection.insertOne(
+   <document>
+)
+```
+
+**db.collection.insertMany()**
+
+Призначення: Вставляє декілька документів у колекцію.
+
+Синтаксис:
+```
+db.collection.insertOne(
+   [ <document 1> , <document 2>, ... ]
+)
+```
+
+**db.collection.updateOne()**
+
+Призначення: Оновлення одного документа в колекції на основі фільтра.
+
+Синтаксис:
+```
+db.collection.updateOne(
+   <filter>,
+   <update>
+)
+```
+
+
+**db.collection.updateMany()**
+
+Призначення: Оновлення декількох документів в колекції на основі фільтра.
+
+Синтаксис:
+```
+db.collection.updateMany(
+   <filter>,
+   <update>
+)
+```
+
+**db.collection.replaceOne()**
+
+Призначення: Замінює один документ у колекції на основі фільтра.
+
+Синтаксис:
+```
+db.collection.replaceOne(
+   <filter>,
+   <replacement>
+)
+```
+
+
+**db.collection.deleteOne()**
+
+Призначення: Вилучає один документ із колекції.
+
+Синтаксис:
+```
+db.collection.deleteOne(
+   <filter>
+)
+```
+
+
+**db.collection.deleteMany()**
+
+Призначення: Вилучає декілька документів із колекції.
+
+Синтаксис:
+```
+db.collection.deleteOne(
+   <filter>
+)
+```
+
+**db.collection.find()**
+
+Призначення: Вибирає документи у колекції чи перегляді та повертає курсор до вибраних документів.
+
+Синтаксис: 
+```
+db.collection.find(
+   { field1: <value>, field2: <value> ... }
+)
+```
+
+
 # Тестування mongo
 Вставлення одна за одною команд:
 ```
