@@ -2,6 +2,7 @@ const { Router } = require("express");
 const config = require("config");
 const shortid = require("shortid");
 const Link = require("../models/Link");
+const User = require("../models/User");
 const auth = require("../middleware/auth.middleware");
 const router = Router();
 
@@ -25,8 +26,12 @@ router.post("/generate", auth, async (req, resp) => {
       from,
       owner: req.user.userId,
     });
+    const user = await User.findById(req.user.userId);
+    user.links.push(link);
 
     await link.save();
+    await user.save();
+
     resp.status(201).json({ link });
   } catch (e) {
     resp.status(500).json({ message: "Something went wrong..." });
