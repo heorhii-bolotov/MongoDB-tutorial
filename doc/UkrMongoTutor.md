@@ -51,7 +51,7 @@ mongo
 ```
 Це запустить оболонку Mongo, яка є додатком для доступу до даних у MongoDB.
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/mongo.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/mongo.png)
 
 # Встановлення Mongodb на Windows
 
@@ -148,13 +148,13 @@ MongoDB shell version v4.2.3
 Користувачі Atlas можуть розгорнути кластери, що представляють собою групи серверів, які зберігають ваші дані.
 Ці сервери налаштовані в тому, що ми називаємо набір реплік, який є кластером, де кожен сервер зберігає однакові дані.
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/cluster.jpg)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/cluster.jpg)
 
 Це означає, що щоразу, коли ви вставляєте або оновлюєте документ, надлишки копій зберігаються у наборі.
 Використання набору реплік гарантує, що якщо ви втратите доступ до одного сервера у своєму кластері, ви не збираєтеся втрачати свої дані.
 Усі сервери вашого кластеру існують у хмарі на обраного вами постачальника хмарних послуг.
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/cluster-lose.jpg)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/cluster-lose.jpg)
 
 **Чому ми повинні використовувати Atlas?**
 
@@ -286,7 +286,7 @@ _Вкладка Hostname_
 Призначення: Вставляє документ у колекцію.
 
 Синтаксис:
-```js
+```
 db.collection.insertOne(
    <document>
 )
@@ -297,7 +297,7 @@ db.collection.insertOne(
 Призначення: Вставляє декілька документів у колекцію.
 
 Синтаксис:
-```js
+```
 db.collection.insertOne(
    [ <document 1> , <document 2>, ... ]
 )
@@ -308,7 +308,7 @@ db.collection.insertOne(
 Призначення: Оновлення одного документа в колекції на основі фільтра.
 
 Синтаксис:
-```js
+```
 db.collection.updateOne(
    <filter>,
    <update>
@@ -321,7 +321,7 @@ db.collection.updateOne(
 Призначення: Оновлення декількох документів в колекції на основі фільтра.
 
 Синтаксис:
-```js
+```
 db.collection.updateMany(
    <filter>,
    <update>
@@ -333,7 +333,7 @@ db.collection.updateMany(
 Призначення: Замінює один документ у колекції на основі фільтра.
 
 Синтаксис:
-```js
+```
 db.collection.replaceOne(
    <filter>,
    <replacement>
@@ -346,7 +346,7 @@ db.collection.replaceOne(
 Призначення: Вилучає один документ із колекції.
 
 Синтаксис:
-```js
+```
 db.collection.deleteOne(
    <filter>
 )
@@ -358,7 +358,7 @@ db.collection.deleteOne(
 Призначення: Вилучає декілька документів із колекції.
 
 Синтаксис:
-```js
+```
 db.collection.deleteOne(
    <filter>
 )
@@ -369,7 +369,7 @@ db.collection.deleteOne(
 Призначення: Вибирає документи у колекції чи перегляді та повертає курсор до вибраних документів.
 
 Синтаксис: 
-```js
+```
 db.collection.find(
    { field1: <value>, field2: <value> ... }
 )
@@ -388,28 +388,146 @@ db.users.save( { name: "Tom" } )
 db.users.find()
 ```
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/test1.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
+
+# Приклад роботи з колекціями
+Код для створення двух колекцій:
+```
+const mongoose = require('mongoose');
+const Article = require("../models/tests/articlesTest/Article");
+const Comment = require("../models/tests/articlesTest/Comment");
+
+const article = new Article({
+  title: "COVID News",
+  author: "amaterasu",
+  body: "Here lies the body of the article",
+})
+
+const comment = new Comment({
+  author: "amaterasu",
+  body: "A very deep overview of the nowadays situation.",
+  article,
+})
+
+const comment2 = new Comment({
+  author: "amaterasu",
+  body: "COVID is a lie.",
+  article,
+})
+
+await comment.save();
+await comment2.save();
+
+article.comments = article.comments.concat(comment, comment2);
+await article.save();
+```
+
+Отримаємо:
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection1.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection2.png)
+
+# Back-end userAPI:
+```
+const { Router } = require("express");
+const Test = require("../models/Test");
+const User = require("../models/User");
+const auth = require("../middleware/auth.middleware");
+const router = Router();
+
+router.post("/create", auth, async (req, resp) => {
+  try {
+    const newTest = new Test({
+      name: req.body.testName,
+      task: req.body.taskQuery,
+      defaultInput: req.body.defaultInput,
+      correctQuery: req.body.output,
+    });
+
+    const formed = await eval("(async () => {" + newTest.task + "})()");
+    const res = await eval("(async () => {" + newTest.correctQuery + "})()");
+    newTest.expectedOutput = res.toString();
+    const queryResult = await newTest.save();
+
+    resp.json({
+      message: "Correct query",
+      queryResult,
+      created: formed,
+      expected: res,
+    });
+  } catch (e) {
+    console.log(e);
+    resp.status(500).json({ message: "Something went wrong..." });
+  }
+});
+
+router.get("/", auth, async (req, resp) => {
+  try {
+    const tests = await Test.find();
+    resp.json({ tests });
+  } catch (e) {
+    resp.status(500).json({ message: "Something went wrong..." });
+  }
+});
+
+router.post("/query", auth, async (req, resp) => {
+  try {
+    if (
+      req.body.query.search("remove") < 0 &&
+      req.body.query.search("update") < 0
+    ) {
+      const result = await eval("(async () => {" + req.body.query + "})()");
+      const expectedOutput = req.body.activeTest.expectedOutput;
+      if (result.includes(expectedOutput) || expectedOutput.includes(result)) {
+        const completed = await Test.findOne({
+          name: req.body.activeTest.name,
+        });
+        const user = await User.findById(req.user.userId);
+        user.completedTests.push(completed);
+        console.log(user);
+        await user.save();
+        resp.json({
+          user,
+          result,
+          message: "success",
+        });
+      } else {
+        resp.json({
+          result,
+          message: "failed",
+        });
+      }
+    } else {
+      resp.json({ message: "Error processing your request" });
+    }
+  } catch (e) {
+    console.log(e);
+    resp.status(500).json({ message: "Something went wrong..." });
+  }
+});
+
+module.exports = router;
+```
 
 # Графічний Клієнт Compass
-click here to [download](https://www.mongodb.com/download-center/compass)
+Натисніть сюди, щоб [завантажити](https://www.mongodb.com/download-center/compass)
 
 Після установки за посиланням ми встановлюємо нове З'єднання, усі поля
 встановлюються за замовчуванням.
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/compass1.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass1.png)
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/compass2.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass2.png)
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/compass3.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass3.png)
 
 # Зверніть увагу, що mongod повинен працювати, інакше Компас не під'єднається
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/connection.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/connection.png)
 
 # Перш ніж працювати з db & schemas, давайте розглянемо відмінності від інших
 типів db
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/difference.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/difference.png)
 
 На відміну від баз даних SQL, Mongodb не використовує пристрій таблиці з чітко
 визначеною кількістю стовпців і типів даних.
@@ -467,7 +585,7 @@ click here to [download](https://www.mongodb.com/download-center/compass)
 Припустимо, ми маємо моделювати структуру, яка містить списки розсилки та дані
 про людей. Приклад [тут](https://habr.com/ru/post/144798/)
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/model.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/model.png)
 
 Наступні вимоги:
 * У людини може бути одна або кілька адрес електронної пошти;
@@ -620,9 +738,9 @@ groups = [
 
 Створіть колекцію people та додайте 4 документи
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/people1.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/people1.png)
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/people2.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/people2.png)
 
 ## Installation mongodb for node.js
 
@@ -779,7 +897,7 @@ filtered/)
 
 **Результат:** ми видалили `"convmonk@gmail.com"` і змінили `"address"` поля
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/remove1.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/remove1.png)
 
 # Mongoose ODM
 ## Installation
@@ -960,7 +1078,7 @@ query.exec(function (err, res) {
 
 Синтаксис створення Promise:
 
-```js
+```
 let promise = new Promise(function(resolve, reject) {
   // function (executor)
   // "singer"
@@ -993,7 +1111,7 @@ let promise = new Promise(function(resolve, reject) {
 виклику рішення (value) або на помилку при відхиленні виклику (error)
 
 
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/photos/promise.png)
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/promise.png)
 
 ```python
 function logger(doc) {
