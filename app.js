@@ -6,11 +6,11 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.use(express.json({ extended: true }));
-app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/link", require("./routes/link.routes"));
-app.use("/api/profile", require("./routes/profile.routes"));
-app.use("/api/test", require("./routes/test.routes"));
-app.use("/t", require("./routes/redirect.routes"));
+app.use("/api/auth", require("./src/routes/auth.routes"));
+app.use("/api/link", require("./src/routes/link.routes"));
+app.use("/api/profile", require("./src/routes/profile.routes"));
+app.use("/api/test", require("./src/routes/test.routes"));
+app.use("/t", require("./src/routes/redirect.routes"));
 app.use(express.static("static"));
 
 if (process.env.NODE_ENV === "production") {

@@ -286,7 +286,7 @@ _Вкладка Hostname_
 Призначення: Вставляє документ у колекцію.
 
 Синтаксис:
-```js
+```
 db.collection.insertOne(
    <document>
 )

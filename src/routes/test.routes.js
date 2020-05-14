@@ -75,17 +75,4 @@ router.post("/query", auth, async (req, resp) => {
   }
 });
 
-// router.post("/complete", auth, async (req, resp) => {
-//   try {
-//     const completed = await Test.findOne({ name: req.body.activeTest.name });
-//     const user = await User.findById(req.user.userId);
-//     user.completedTests.push(completed);
-//     // user.save();
-//     resp.json({ message: "Test completed" });
-//   } catch (e) {
-//     console.log(e);
-//     resp.status(500).json({ message: "Something went wrong..." });
-//   }
-// });
-
 module.exports = router;
