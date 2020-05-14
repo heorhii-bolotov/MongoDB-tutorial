@@ -423,7 +423,9 @@ await article.save();
 ```
 
 Отримаємо:
+
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection1.png)
+
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection2.png)
 
 # Back-end userAPI:
