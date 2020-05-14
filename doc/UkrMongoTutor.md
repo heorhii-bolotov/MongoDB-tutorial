@@ -286,7 +286,7 @@ _Вкладка Hostname_
 Призначення: Вставляє документ у колекцію.
 
 Синтаксис:
-```
+```js
 db.collection.insertOne(
    <document>
 )
@@ -297,7 +297,7 @@ db.collection.insertOne(
 Призначення: Вставляє декілька документів у колекцію.
 
 Синтаксис:
-```
+```js
 db.collection.insertOne(
    [ <document 1> , <document 2>, ... ]
 )
@@ -308,7 +308,7 @@ db.collection.insertOne(
 Призначення: Оновлення одного документа в колекції на основі фільтра.
 
 Синтаксис:
-```
+```js
 db.collection.updateOne(
    <filter>,
    <update>
@@ -321,7 +321,7 @@ db.collection.updateOne(
 Призначення: Оновлення декількох документів в колекції на основі фільтра.
 
 Синтаксис:
-```
+```js
 db.collection.updateMany(
    <filter>,
    <update>
@@ -333,7 +333,7 @@ db.collection.updateMany(
 Призначення: Замінює один документ у колекції на основі фільтра.
 
 Синтаксис:
-```
+```js
 db.collection.replaceOne(
    <filter>,
    <replacement>
@@ -346,7 +346,7 @@ db.collection.replaceOne(
 Призначення: Вилучає один документ із колекції.
 
 Синтаксис:
-```
+```js
 db.collection.deleteOne(
    <filter>
 )
@@ -358,7 +358,7 @@ db.collection.deleteOne(
 Призначення: Вилучає декілька документів із колекції.
 
 Синтаксис:
-```
+```js
 db.collection.deleteOne(
    <filter>
 )
@@ -369,7 +369,7 @@ db.collection.deleteOne(
 Призначення: Вибирає документи у колекції чи перегляді та повертає курсор до вибраних документів.
 
 Синтаксис: 
-```
+```js
 db.collection.find(
    { field1: <value>, field2: <value> ... }
 )
@@ -960,7 +960,7 @@ query.exec(function (err, res) {
 
 Синтаксис створення Promise:
 
-```
+```js
 let promise = new Promise(function(resolve, reject) {
   // function (executor)
   // "singer"
