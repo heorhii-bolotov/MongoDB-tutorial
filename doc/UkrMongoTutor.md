@@ -392,7 +392,7 @@ db.users.find()
 
 # Приклад роботи з колекціями
 Код для створення двух колекцій:
-```
+```js
 const mongoose = require('mongoose');
 const Article = require("../models/tests/articlesTest/Article");
 const Comment = require("../models/tests/articlesTest/Comment");
@@ -429,7 +429,7 @@ await article.save();
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection2.png)
 
 # Back-end userAPI:
-```
+```js
 const { Router } = require("express");
 const Test = require("../models/Test");
 const User = require("../models/User");
@@ -683,7 +683,7 @@ module.exports = router;
 групи в колекції People і отримаємо їхні електронні адреси безпосередньо з
 підписки.
 
-```python
+```
 people = [
                {
                  "_id": 1,
@@ -750,7 +750,7 @@ groups = [
 npm install mongodb
 ```
 
-```python
+```js
 %%node
 // create MongoClient object
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
@@ -827,7 +827,7 @@ the first `id` is excluded as long as it has no membership in group with
   ```
 
 
-```python
+```js
 %%node
 // create MongoClient object
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
@@ -902,6 +902,20 @@ filtered/)
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/remove1.png)
 
 # Mongoose ODM
+
+Mongoose - це ODM (* Object Document Mapper - об'єктно-документний відображувач). Це означає, що Mongoose дозволяє вам визначати об'єкти зі строго-типізованою схемою, яка відповідає документу MongoDB.
+
+Mongoose надає величезний набір функціональних можливостей для створення і роботи зі схемами. На даний момент Mongoose містить вісім SchemaTypes (* типи даних схеми), які можуть мати властивість, яка зберігається в MongoDB. Ці типи наступні:
+
+* String
+* Number
+* Date
+* Buffer
+* Boolean
+* Mixed
+* ObjectId (* унікальний ідентифікатор об'єкта, первинний ключ, _id)
+* Array
+
 ## Installation
 
 ```
@@ -929,7 +943,7 @@ too.
 })
 ```
 
-```python
+```js
 %%node
 
 // import mongoose lib
@@ -997,15 +1011,15 @@ Mongoose забезпечує вбудовані валідатори, валі�
 слід встановлювати поле перед збереженням документа.
 * Числа мають валідатори min та max.
 * У рядках:
-** enum (перерахування): вказати набір допустимих значень для поля.
-** match (match)): задає регулярний вираз, що рядок повинен відповідати.
-** maxlength, minlength - максимальна і мінімальна довжина струни.
+* * enum (перерахування): вказати набір допустимих значень для поля.
+* * match (match)): задає регулярний вираз, що рядок повинен відповідати.
+* * maxlength, minlength - максимальна і мінімальна довжина струни.
 
 > here is more [info](https://mongoosejs.com/docs/validation.html)
 
 Простий приклад перевірки:
 
-```python
+```js
 %%node
 // create new doc for testing validation
 var item = new Person({
@@ -1025,7 +1039,7 @@ item.validate(function(err) {
 Знову, знайдіть усі електронні листи людей, які мають членство в групі з
 "group_name" особи з "addresses"
 
-```python
+```js
 var query_fields = {'addresses': 'convmonk@gmail.com', 'memberships.group_name': 'something'};
 var select = {'memberships.group_name': 1, 'memberships.group': 1, '_id': 0};
 
@@ -1080,7 +1094,7 @@ query.exec(function (err, res) {
 
 Синтаксис створення Promise:
 
-```
+```js
 let promise = new Promise(function(resolve, reject) {
   // function (executor)
   // "singer"
@@ -1115,7 +1129,7 @@ let promise = new Promise(function(resolve, reject) {
 
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/promise.png)
 
-```python
+```js
 function logger(doc) {
     console.log(doc);
 }
@@ -1149,7 +1163,7 @@ var prom = Person.findOne(query_fields, null, {lean: true, emptyError: true})
 
 Update/delete promise
 
-```python
+```js
 var query_fields = {'addresses': 'convmonk@gmail.com'};
 var select = {'addresses': 1, 'memberships.address': 1};
 
