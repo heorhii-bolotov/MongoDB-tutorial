@@ -53,292 +53,6 @@
 }
 ```
 
-# Базові команди для роботи з MongoDB
-
-**db.collection.insertOne()**
-
-Призначення: Вставляє документ у колекцію.
-
-Синтаксис:
-```
-db.collection.insertOne(
-   <document>
-)
-```
-
-**db.collection.insertMany()**
-
-Призначення: Вставляє декілька документів у колекцію.
-
-Синтаксис:
-```
-db.collection.insertOne(
-   [ <document 1> , <document 2>, ... ]
-)
-```
-
-**db.collection.updateOne()**
-
-Призначення: Оновлення одного документа в колекції на основі фільтра.
-
-Синтаксис:
-```
-db.collection.updateOne(
-   <filter>,
-   <update>
-)
-```
-
-
-**db.collection.updateMany()**
-
-Призначення: Оновлення декількох документів в колекції на основі фільтра.
-
-Синтаксис:
-```
-db.collection.updateMany(
-   <filter>,
-   <update>
-)
-```
-
-**db.collection.replaceOne()**
-
-Призначення: Замінює один документ у колекції на основі фільтра.
-
-Синтаксис:
-```
-db.collection.replaceOne(
-   <filter>,
-   <replacement>
-)
-```
-
-
-**db.collection.deleteOne()**
-
-Призначення: Вилучає один документ із колекції.
-
-Синтаксис:
-```
-db.collection.deleteOne(
-   <filter>
-)
-```
-
-
-**db.collection.deleteMany()**
-
-Призначення: Вилучає декілька документів із колекції.
-
-Синтаксис:
-```
-db.collection.deleteOne(
-   <filter>
-)
-```
-
-**db.collection.find()**
-
-Призначення: Вибирає документи у колекції чи перегляді та повертає курсор до вибраних документів.
-
-Синтаксис: 
-```
-db.collection.find(
-   { field1: <value>, field2: <value> ... }
-)
-```
-
-
-# Тестування mongo
-Вставлення одна за одною команд:
-```
-# sets database with name 'use' for current usage, if it doesnt exist, it will
-be created
-use test
-# adds in collection 'users' of db 'test' object in json format
-db.users.save( { name: "Tom" } )
-# prints all objects from db 'test'
-db.users.find()
-```
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
-
-# Приклад роботи з колекціями
-Код для створення двух колекцій:
-```js
-const mongoose = require('mongoose');
-const Article = require("../models/tests/articlesTest/Article");
-const Comment = require("../models/tests/articlesTest/Comment");
-
-const article = new Article({
-  title: "COVID News",
-  author: "amaterasu",
-  body: "Here lies the body of the article",
-})
-
-const comment = new Comment({
-  author: "amaterasu",
-  body: "A very deep overview of the nowadays situation.",
-  article,
-})
-
-const comment2 = new Comment({
-  author: "amaterasu",
-  body: "COVID is a lie.",
-  article,
-})
-
-await comment.save();
-await comment2.save();
-
-article.comments = article.comments.concat(comment, comment2);
-await article.save();
-```
-
-Отримаємо:
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection1.png)
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection2.png)
-
-# Back-end userAPI:
-```js
-const { Router } = require("express");
-const Test = require("../models/Test");
-const User = require("../models/User");
-const auth = require("../middleware/auth.middleware");
-const router = Router();
-
-router.post("/create", auth, async (req, resp) => {
-  try {
-    const newTest = new Test({
-      name: req.body.testName,
-      task: req.body.taskQuery,
-      defaultInput: req.body.defaultInput,
-      correctQuery: req.body.output,
-    });
-
-    const formed = await eval("(async () => {" + newTest.task + "})()");
-    const res = await eval("(async () => {" + newTest.correctQuery + "})()");
-    newTest.expectedOutput = res.toString();
-    const queryResult = await newTest.save();
-
-    resp.json({
-      message: "Correct query",
-      queryResult,
-      created: formed,
-      expected: res,
-    });
-  } catch (e) {
-    console.log(e);
-    resp.status(500).json({ message: "Something went wrong..." });
-  }
-});
-
-router.get("/", auth, async (req, resp) => {
-  try {
-    const tests = await Test.find();
-    resp.json({ tests });
-  } catch (e) {
-    resp.status(500).json({ message: "Something went wrong..." });
-  }
-});
-
-router.post("/query", auth, async (req, resp) => {
-  try {
-    if (
-      req.body.query.search("remove") < 0 &&
-      req.body.query.search("update") < 0
-    ) {
-      const result = await eval("(async () => {" + req.body.query + "})()");
-      const expectedOutput = req.body.activeTest.expectedOutput;
-      if (result.includes(expectedOutput) || expectedOutput.includes(result)) {
-        const completed = await Test.findOne({
-          name: req.body.activeTest.name,
-        });
-        const user = await User.findById(req.user.userId);
-        user.completedTests.push(completed);
-        console.log(user);
-        await user.save();
-        resp.json({
-          user,
-          result,
-          message: "success",
-        });
-      } else {
-        resp.json({
-          result,
-          message: "failed",
-        });
-      }
-    } else {
-      resp.json({ message: "Error processing your request" });
-    }
-  } catch (e) {
-    console.log(e);
-    resp.status(500).json({ message: "Something went wrong..." });
-  }
-});
-
-module.exports = router;
-```
-
-# Встановлення Mongodb на Mac
-
-MongoDB - це база даних документів, яка належить до сімейства баз даних під
-назвою NoSQL - не тільки SQL. У MongoDB записи - це документи, які дуже схожі на
-об'єкти JSON в JavaScript. Значення в документах можна шукати за допомогою ключа
-їх поля. Документи можуть мати деякі поля / ключі, а не інші, що робить Mongo
-надзвичайно гнучким.
-
-
-**Tap the MongoDB Homebrew Tap**
-```
-brew install mongodb
-```
-```
-brew install mongodb-community@4.2
-```
-
-
-**Після завантаження mongo**, створіть */data/db* directory в root
-```
-mkdir -p /data/db
-```
-В останньому Mac OS x ви стикаєтеся з такою проблемою, як:
-```
-mkdir: /data/db: Read-only file system
-```
-
-Тому ви більше не можете писати в корінь. Ось ще одне рішення (ми можемо
-приймати dir де завгодно і під час виклику **mongo daemon** передати *- dbpath =
-OUR_PATH / data / db*):
-```
-cd ~
-mkdir -p data/db # preferably with sudo
-```
-
-
-**Запустіть Mongo daemon**, у терміналі:
-```
-# Absolute path in my case
-mongod --dbpath=/Users/macair/data/db
-
-# If you were able to make /data/db in root, then just
-mongod
-```
-Це має запустити сервер Mongo.
-
-**Запустіть Mongo shell**, при цьому Mongo daemon працює в одному терміналі,
-введіть `mongo` в інше вікно терміналу. :
-```
-mongo
-```
-Це запустить оболонку Mongo, яка є додатком для доступу до даних у MongoDB.
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/mongo.png)
-
 # Встановлення Mongodb на Windows
 
 Перейдіть у [Центр завантажень MongoDB](https://www.mongodb.com/download-center/enterprise) -> виберіть у спадному меню **Windows x64** як свою операційну систему, а потім завантажте **файл .msi**.
@@ -495,6 +209,292 @@ _Вкладка Hostname_
 # Зверніть увагу, що mongod повинен працювати, інакше Компас не під'єднається
 
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/connection.png)
+
+# Встановлення Mongodb на Mac
+
+MongoDB - це база даних документів, яка належить до сімейства баз даних під
+назвою NoSQL - не тільки SQL. У MongoDB записи - це документи, які дуже схожі на
+об'єкти JSON в JavaScript. Значення в документах можна шукати за допомогою ключа
+їх поля. Документи можуть мати деякі поля / ключі, а не інші, що робить Mongo
+надзвичайно гнучким.
+
+
+**Tap the MongoDB Homebrew Tap**
+```
+brew install mongodb
+```
+```
+brew install mongodb-community@4.2
+```
+
+
+**Після завантаження mongo**, створіть */data/db* directory в root
+```
+mkdir -p /data/db
+```
+В останньому Mac OS x ви стикаєтеся з такою проблемою, як:
+```
+mkdir: /data/db: Read-only file system
+```
+
+Тому ви більше не можете писати в корінь. Ось ще одне рішення (ми можемо
+приймати dir де завгодно і під час виклику **mongo daemon** передати *- dbpath =
+OUR_PATH / data / db*):
+```
+cd ~
+mkdir -p data/db # preferably with sudo
+```
+
+
+**Запустіть Mongo daemon**, у терміналі:
+```
+# Absolute path in my case
+mongod --dbpath=/Users/macair/data/db
+
+# If you were able to make /data/db in root, then just
+mongod
+```
+Це має запустити сервер Mongo.
+
+**Запустіть Mongo shell**, при цьому Mongo daemon працює в одному терміналі,
+введіть `mongo` в інше вікно терміналу. :
+```
+mongo
+```
+Це запустить оболонку Mongo, яка є додатком для доступу до даних у MongoDB.
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/mongo.png)
+
+
+# Тестування mongo
+Вставлення одна за одною команд:
+```
+# sets database with name 'use' for current usage, if it doesnt exist, it will
+be created
+use test
+# adds in collection 'users' of db 'test' object in json format
+db.users.save( { name: "Tom" } )
+# prints all objects from db 'test'
+db.users.find()
+```
+
+# Базові команди для роботи з MongoDB
+
+**db.collection.insertOne()**
+
+Призначення: Вставляє документ у колекцію.
+
+Синтаксис:
+```
+db.collection.insertOne(
+   <document>
+)
+```
+
+**db.collection.insertMany()**
+
+Призначення: Вставляє декілька документів у колекцію.
+
+Синтаксис:
+```
+db.collection.insertOne(
+   [ <document 1> , <document 2>, ... ]
+)
+```
+
+**db.collection.updateOne()**
+
+Призначення: Оновлення одного документа в колекції на основі фільтра.
+
+Синтаксис:
+```
+db.collection.updateOne(
+   <filter>,
+   <update>
+)
+```
+
+
+**db.collection.updateMany()**
+
+Призначення: Оновлення декількох документів в колекції на основі фільтра.
+
+Синтаксис:
+```
+db.collection.updateMany(
+   <filter>,
+   <update>
+)
+```
+
+**db.collection.replaceOne()**
+
+Призначення: Замінює один документ у колекції на основі фільтра.
+
+Синтаксис:
+```
+db.collection.replaceOne(
+   <filter>,
+   <replacement>
+)
+```
+
+
+**db.collection.deleteOne()**
+
+Призначення: Вилучає один документ із колекції.
+
+Синтаксис:
+```
+db.collection.deleteOne(
+   <filter>
+)
+```
+
+
+**db.collection.deleteMany()**
+
+Призначення: Вилучає декілька документів із колекції.
+
+Синтаксис:
+```
+db.collection.deleteOne(
+   <filter>
+)
+```
+
+**db.collection.find()**
+
+Призначення: Вибирає документи у колекції чи перегляді та повертає курсор до вибраних документів.
+
+Синтаксис: 
+```
+db.collection.find(
+   { field1: <value>, field2: <value> ... }
+)
+```
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
+
+# Приклад роботи з колекціями
+Код для створення двух колекцій:
+```js
+const mongoose = require('mongoose');
+const Article = require("../models/tests/articlesTest/Article");
+const Comment = require("../models/tests/articlesTest/Comment");
+
+const article = new Article({
+  title: "COVID News",
+  author: "amaterasu",
+  body: "Here lies the body of the article",
+})
+
+const comment = new Comment({
+  author: "amaterasu",
+  body: "A very deep overview of the nowadays situation.",
+  article,
+})
+
+const comment2 = new Comment({
+  author: "amaterasu",
+  body: "COVID is a lie.",
+  article,
+})
+
+await comment.save();
+await comment2.save();
+
+article.comments = article.comments.concat(comment, comment2);
+await article.save();
+```
+
+Отримаємо:
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection1.png)
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test-collection2.png)
+
+# Back-end userAPI:
+```js
+const { Router } = require("express");
+const Test = require("../models/Test");
+const User = require("../models/User");
+const auth = require("../middleware/auth.middleware");
+const router = Router();
+
+router.post("/create", auth, async (req, resp) => {
+  try {
+    const newTest = new Test({
+      name: req.body.testName,
+      task: req.body.taskQuery,
+      defaultInput: req.body.defaultInput,
+      correctQuery: req.body.output,
+    });
+
+    const formed = await eval("(async () => {" + newTest.task + "})()");
+    const res = await eval("(async () => {" + newTest.correctQuery + "})()");
+    newTest.expectedOutput = res.toString();
+    const queryResult = await newTest.save();
+
+    resp.json({
+      message: "Correct query",
+      queryResult,
+      created: formed,
+      expected: res,
+    });
+  } catch (e) {
+    console.log(e);
+    resp.status(500).json({ message: "Something went wrong..." });
+  }
+});
+
+router.get("/", auth, async (req, resp) => {
+  try {
+    const tests = await Test.find();
+    resp.json({ tests });
+  } catch (e) {
+    resp.status(500).json({ message: "Something went wrong..." });
+  }
+});
+
+router.post("/query", auth, async (req, resp) => {
+  try {
+    if (
+      req.body.query.search("remove") < 0 &&
+      req.body.query.search("update") < 0
+    ) {
+      const result = await eval("(async () => {" + req.body.query + "})()");
+      const expectedOutput = req.body.activeTest.expectedOutput;
+      if (result.includes(expectedOutput) || expectedOutput.includes(result)) {
+        const completed = await Test.findOne({
+          name: req.body.activeTest.name,
+        });
+        const user = await User.findById(req.user.userId);
+        user.completedTests.push(completed);
+        console.log(user);
+        await user.save();
+        resp.json({
+          user,
+          result,
+          message: "success",
+        });
+      } else {
+        resp.json({
+          result,
+          message: "failed",
+        });
+      }
+    } else {
+      resp.json({ message: "Error processing your request" });
+    }
+  } catch (e) {
+    console.log(e);
+    resp.status(500).json({ message: "Something went wrong..." });
+  }
+});
+
+module.exports = router;
+```
 
 # Трохи практики
 
