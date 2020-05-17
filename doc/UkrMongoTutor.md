@@ -286,8 +286,7 @@ mongo
 # Тестування mongo
 Вставлення одна за одною команд:
 ```
-# sets database with name 'use' for current usage, if it doesnt exist, it will
-be created
+# sets database with name 'use' for current usage, if it doesnt exist, it will be created
 use test
 # adds in collection 'users' of db 'test' object in json format
 db.users.save( { name: "Tom" } )
@@ -965,6 +964,8 @@ item.validate(function(err) {
         console.log(err.message);
     else
         console.log('pass validate');
+    }
+);
 ```
 
 Знову, знайдіть усі електронні листи людей, які мають членство в групі з
