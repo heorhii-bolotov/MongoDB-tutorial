@@ -293,6 +293,7 @@ db.users.save( { name: "Tom" } )
 # prints all objects from db 'test'
 db.users.find()
 ```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
 
 # Базові команди для роботи з MongoDB
 
@@ -389,8 +390,6 @@ db.collection.find(
    { field1: <value>, field2: <value> ... }
 )
 ```
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
 
 # Приклад роботи з колекціями
 Код для створення двух колекцій:
