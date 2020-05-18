@@ -218,6 +218,18 @@ db.users.find()
 ```
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
 
+# Графічний Клієнт Compass
+Натисніть сюди, щоб [завантажити](https://www.mongodb.com/download-center/compass)
+
+Після установки за посиланням ми встановлюємо нове З'єднання, усі поля
+встановлюються за замовчуванням.
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass1.png)
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass2.png)
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass3.png)
+
 # Підключення до MongoDB за допомогою Compass
 
 Завантажте Compass з [центру завантаження MongoDB](https://www.mongodb.com/download-center/compass). Якщо ви вже встановлини Compass, тоді переконайтеся, що ви використовуєте останню (стабільну) версію Compass та при необхідності оновіть. НЕ завантажуйте та не встановлюйте версію "Community Edition Stable". Встановіть його та запустіть.
@@ -276,19 +288,6 @@ _Вкладка Hostname_
 **Read Preference**: Primary Preferred
 
 ![](https://university-courses.s3.amazonaws.com/M001/Compass_more_options_connection.png)
-
-
-# Графічний Клієнт Compass
-Натисніть сюди, щоб [завантажити](https://www.mongodb.com/download-center/compass)
-
-Після установки за посиланням ми встановлюємо нове З'єднання, усі поля
-встановлюються за замовчуванням.
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass1.png)
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass2.png)
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass3.png)
 
 # Зверніть увагу, що mongod повинен працювати, інакше Компас не під'єднається
 
