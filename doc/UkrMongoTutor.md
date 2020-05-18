@@ -1219,7 +1219,7 @@ _Зауважте, що ми зазвичай не рекомендуємо ві
 
 #Тестування jest-mongodb
 
-![Jest MongoDB](https://github.com/shelfio/jest-mongodb) забезпечує всю необхідну конфігурацію для запуску тестів за допомогою MongoDB.
+[Jest MongoDB](https://github.com/shelfio/jest-mongodb) забезпечує всю необхідну конфігурацію для запуску тестів за допомогою MongoDB.
 
 1. Спочатку встановіть @shelf/jest-mongodb
 ```
