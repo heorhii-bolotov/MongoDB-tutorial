@@ -579,6 +579,31 @@ db.inventory.find( { qty: { $gte: 20 } } )
 db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 ```
 
+### $elemMatch (query)
+
+_**Syntax: { <field>: { $elemMatch: { <query1>, <query2>, ... } } }**_
+ 
+Враховуючи такі документи в колекції: 
+
+```js
+{ _id: 1, results: [ 82, 85, 88 ] }
+{ _id: 2, results: [ 75, 88, 89 ] }
+```
+
+Наступний запит відповідає лише тим документам, де масив ```results``` містить щонайменше один елемент, який є більшим або рівним ```80``` та менше ```85```.
+
+```js
+db.scores.find(
+   { results: { $elemMatch: { $gte: 80, $lt: 85 } } }
+)
+```
+
+Запит поверне 
+
+```js
+{ "_id" : 1, "results" : [ 82, 85, 88 ] }
+```
+
 
 # Інші приклади
 
@@ -598,7 +623,7 @@ db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 
 **People** з ім'ям та паролем
 
-```
+```js
 {
     _id: PERSON_ID,
     name: "Name Surname",
@@ -607,7 +632,7 @@ db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 ```
 
 **Adresses** де кожен email прив'язується до конкретного абонента
-```
+```js
 {
     _id: ADDRESS_ID,
     person: PERSON_ID,
@@ -616,7 +641,7 @@ db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 ```
 
 **Groups** ми можемо визначити деякі додаткові поля
-```
+```js
 {
     _id: GROUP_ID
 }
@@ -624,7 +649,7 @@ db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 
 **Memberships** об’єднує людей у ​​групи
 
-```
+```js
 {
     _id: MEMBERSHIP_ID,
     person: PERSON_ID,
@@ -653,7 +678,7 @@ db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 
 ## Модель з частково вбудованими даними
 **People**
-```
+```js
 {
     _id: PERSON_ID,
     name: "Name Surname",
@@ -668,7 +693,7 @@ db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 ```
 
 **Groups** ми можемо визначити деякі додаткові поля
-```
+```js
 {
     _id: GROUP_ID
 }
