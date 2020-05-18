@@ -706,7 +706,7 @@ db.scores.find(
 групи в колекції People і отримаємо їхні електронні адреси безпосередньо з
 підписки.
 
-```
+```js
 people = [
                {
                  "_id": 1,
@@ -828,7 +828,7 @@ MongoClient.connect(url, function(err, db) {
 **Result:**
 the first `id` is excluded as long as it has no membership in group with
 `group_id`
-```
+```js
 { _id: 2,
   addresses: [
     'convmonk@gmail.com',
@@ -948,7 +948,7 @@ npm install mongoose
 Types:
 
 
-```
+```js
 var schema = new Schema(
 {
   name: String,
