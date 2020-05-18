@@ -509,6 +509,77 @@ router.post("/query", auth, async (req, resp) => {
 module.exports = router;
 ```
 
+# Оператори запитів(query) та проекцій(projection)
+
+_для кожного селектору є посилання з прикладами_
+
+## Селектори запитів
+
+| Name   | Description                                                         |
+|--------|:-------------------------------------------------------------------:|
+| [$eq](https://www.bookstack.cn/read/mongodb-4.2-manual/6340320dc3dfc823.md#op._S_eq)	   | Відповідає значенням, рівним заданому значенню.                     | 
+| [$gt](https://www.bookstack.cn/read/mongodb-4.2-manual/b18f99cdd71e3948.md#op._S_gt)	   | Відповідає значенням, що перевищують задане значення.               |
+| [$gte](https://www.bookstack.cn/read/mongodb-4.2-manual/69028f025e729a31.md#op._S_gte)	| Відповідає значенням, що більше або дорівнює заданому значенню.     |
+| [$in](https://www.bookstack.cn/read/mongodb-4.2-manual/17161a7651d20b5a.md#op._S_in)	   | Відповідає будь-якому зі значень, вказаних у масиві.                |
+| [$lt](https://www.bookstack.cn/read/mongodb-4.2-manual/750260d4249e8c35.md#op._S_lt)	   | Відповідає значенням, меншим за вказане значення.                   |
+| [$lte](https://www.bookstack.cn/read/mongodb-4.2-manual/eea81d13c92ecd5f.md#op._S_lte)	| Відповідає значенням, меншим або рівним заданому значенню.          |
+| [$ne](https://www.bookstack.cn/read/mongodb-4.2-manual/bd164579d80de3c9.md#op._S_ne)	   | Відповідає всім значенням, не рівним заданому значенню.             |
+| [$nin](https://www.bookstack.cn/read/mongodb-4.2-manual/a2c67159e3c89845.md#op._S_nin)	| Не відповідає жодному зі значень, вказаних у масиві.                |
+
+## Логічні
+
+| Name	| Description                                                                                                     |
+|--------|:---------------------------------------------------------------------------------------------------------------:|
+| [$and](https://www.bookstack.cn/read/mongodb-4.2-manual/0ac9f896539e32b6.md#op._S_and)	| Приєднується до запитів із логічним ```AND``` повертає всі документи, які відповідають умовам обох пунктів.     |
+| [$not](https://www.bookstack.cn/read/mongodb-4.2-manual/3d1841137078acd3.md#op._S_not)	| Інвертує вираження запиту та повертає документи, які не відповідають виразу запиту.                             |
+| [$nor](https://www.bookstack.cn/read/mongodb-4.2-manual/df28b9509c0a357d.md#op._S_nor)	| Приєднується до запитів із логічним ```NOR``` повертає всі документи, які не відповідають обом пунктам.         |
+| [$or](https://www.bookstack.cn/read/mongodb-4.2-manual/0c1c9c15f2142aa5.md#op._S_or)	   | Приєднується до запитів із логічним ```OR``` повертає всі документи, які відповідають умовам будь-якого пункту. |
+
+## Елемент
+
+| Name	   | Description                                   | 
+|-----------|:---------------------------------------------:|
+| [$exists](https://www.bookstack.cn/read/mongodb-4.2-manual/4add7c495fb97712.md#op._S_exists)	| Відповідає документам, що мають вказане поле. |
+| [$type](https://www.bookstack.cn/read/mongodb-4.2-manual/2c4a8fe9a41bc1ac.md#op._S_type)	   | Вибирає документи, якщо поле вказаного типу.  |
+
+## Оцінення
+
+| Name	      | Description                                                                                        |
+|--------------|:--------------------------------------------------------------------------------------------------:|
+| [$expr](https://www.bookstack.cn/read/mongodb-4.2-manual/b901afb7f2d4a064.md#op._S_expr)	      | Дозволяє використовувати вирази агрегації в мові запиту.                                           |
+| [$jsonSchema](https://www.bookstack.cn/read/mongodb-4.2-manual/1bd456d35e6d6b5e.md#op._S_jsonSchema)	| Обгрунтуйте документи щодо даної схеми JSON.                                                       |
+| [$mod](https://www.bookstack.cn/read/mongodb-4.2-manual/fccf3a5c1e8c9ba5.md#op._S_mod)	      | Виконує модульну операцію над значенням поля та вибирає документи із заданим результатом.          |
+| [$regex](https://www.bookstack.cn/read/mongodb-4.2-manual/83747e50d5c91415.md#op._S_regex)	      | Вибирає документи, у яких значення відповідають заданому регулярному виразу.                       |
+| [$text](https://www.bookstack.cn/read/mongodb-4.2-manual/6b560c502d5a7e0e.md#op._S_text)	      | Здійснює пошук тексту.                                                                             |
+| [$where](https://www.bookstack.cn/read/mongodb-4.2-manual/4781820d20f6b9c9.md#op._S_where)	      | Відповідає документам, що задовольняють вираз JavaScript.                                          |
+
+## Масив
+
+| Name	      | Description                                                                               |
+|--------------|:-----------------------------------------------------------------------------------------:|
+| [$all](https://www.bookstack.cn/read/mongodb-4.2-manual/5591935e963488aa.md#op._S_all)	      | Збігає масиви, які містять усі елементи, вказані в запиті.                                |
+| [$elemMatch](https://www.bookstack.cn/read/mongodb-4.2-manual/df0d30f33b468592.md#op._S_elemMatch)	| Вибирає документи, якщо елемент у полі масиву відповідає всім заданим умовам $ elemMatch. |
+| [$size](https://www.bookstack.cn/read/mongodb-4.2-manual/1f2e158b67d9160d.md#op._S_size)	      | Вибирає документи, якщо поле масиву заданого розміру.                                     |
+
+## За приклад візьмемо: 
+
+### $gte
+
+_**Syntax: {field: {$gte: value} }**_
+
+Цей запит вибере всі документи в ```inventory```, де значення кількості поля більше або дорівнює ```20```.
+
+```js
+db.inventory.find( { qty: { $gte: 20 } } )
+```
+
+Ця операція update () встановлює значення ```price``` поля, яке містить вбудований носій документа ```carrier```, значення поля ```fee``` перевищує або дорівнює ```2```.
+
+```js
+db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
+```
+
+
 # Інші приклади
 
 Припустимо, ми маємо моделювати структуру, яка містить списки розсилки та дані
