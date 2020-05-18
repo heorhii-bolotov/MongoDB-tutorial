@@ -152,6 +152,72 @@ MongoDB shell version v4.2.3
 ```
 ![](https://university-courses.s3.amazonaws.com/M001/Mongo+shell+installation+guide+windows/mongo_nodb.png)
 
+# Встановлення Mongodb на Mac
+
+MongoDB - це база даних документів, яка належить до сімейства баз даних під
+назвою NoSQL - не тільки SQL. У MongoDB записи - це документи, які дуже схожі на
+об'єкти JSON в JavaScript. Значення в документах можна шукати за допомогою ключа
+їх поля. Документи можуть мати деякі поля / ключі, а не інші, що робить Mongo
+надзвичайно гнучким.
+
+**Tap the MongoDB Homebrew Tap**
+```
+brew install mongodb
+```
+```
+brew install mongodb-community@4.2
+```
+
+**Після завантаження mongo**, створіть */data/db* directory в root
+```
+mkdir -p /data/db
+```
+В останньому Mac OS x ви стикаєтеся з такою проблемою, як:
+```
+mkdir: /data/db: Read-only file system
+```
+
+Тому ви більше не можете писати в корінь. Ось ще одне рішення (ми можемо
+приймати dir де завгодно і під час виклику **mongo daemon** передати *- dbpath =
+OUR_PATH / data / db*):
+```
+cd ~
+mkdir -p data/db # preferably with sudo
+```
+
+
+**Запустіть Mongo daemon**, у терміналі:
+```
+# Absolute path in my case
+mongod --dbpath=/Users/macair/data/db
+
+# If you were able to make /data/db in root, then just
+mongod
+```
+Це має запустити сервер Mongo.
+
+**Запустіть Mongo shell**, при цьому Mongo daemon працює в одному терміналі,
+введіть `mongo` в інше вікно терміналу. :
+```
+mongo
+```
+Це запустить оболонку Mongo, яка є додатком для доступу до даних у MongoDB.
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/mongo.png)
+
+
+# Тестування mongo
+Вставлення одна за одною команд:
+```
+# sets database with name 'use' for current usage, if it doesnt exist, it will be created
+use test
+# adds in collection 'users' of db 'test' object in json format
+db.users.save( { name: "Tom" } )
+# prints all objects from db 'test'
+db.users.find()
+```
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
+
 # Підключення до MongoDB за допомогою Compass
 
 Завантажте Compass з [центру завантаження MongoDB](https://www.mongodb.com/download-center/compass). Якщо ви вже встановлини Compass, тоді переконайтеся, що ви використовуєте останню (стабільну) версію Compass та при необхідності оновіть. НЕ завантажуйте та не встановлюйте версію "Community Edition Stable". Встановіть його та запустіть.
@@ -211,73 +277,6 @@ _Вкладка Hostname_
 
 ![](https://university-courses.s3.amazonaws.com/M001/Compass_more_options_connection.png)
 
-# Встановлення Mongodb на Mac
-
-MongoDB - це база даних документів, яка належить до сімейства баз даних під
-назвою NoSQL - не тільки SQL. У MongoDB записи - це документи, які дуже схожі на
-об'єкти JSON в JavaScript. Значення в документах можна шукати за допомогою ключа
-їх поля. Документи можуть мати деякі поля / ключі, а не інші, що робить Mongo
-надзвичайно гнучким.
-
-
-**Tap the MongoDB Homebrew Tap**
-```
-brew install mongodb
-```
-```
-brew install mongodb-community@4.2
-```
-
-
-**Після завантаження mongo**, створіть */data/db* directory в root
-```
-mkdir -p /data/db
-```
-В останньому Mac OS x ви стикаєтеся з такою проблемою, як:
-```
-mkdir: /data/db: Read-only file system
-```
-
-Тому ви більше не можете писати в корінь. Ось ще одне рішення (ми можемо
-приймати dir де завгодно і під час виклику **mongo daemon** передати *- dbpath =
-OUR_PATH / data / db*):
-```
-cd ~
-mkdir -p data/db # preferably with sudo
-```
-
-
-**Запустіть Mongo daemon**, у терміналі:
-```
-# Absolute path in my case
-mongod --dbpath=/Users/macair/data/db
-
-# If you were able to make /data/db in root, then just
-mongod
-```
-Це має запустити сервер Mongo.
-
-**Запустіть Mongo shell**, при цьому Mongo daemon працює в одному терміналі,
-введіть `mongo` в інше вікно терміналу. :
-```
-mongo
-```
-Це запустить оболонку Mongo, яка є додатком для доступу до даних у MongoDB.
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/mongo.png)
-
-
-# Тестування mongo
-Вставлення одна за одною команд:
-```
-# sets database with name 'use' for current usage, if it doesnt exist, it will be created
-use test
-# adds in collection 'users' of db 'test' object in json format
-db.users.save( { name: "Tom" } )
-# prints all objects from db 'test'
-db.users.find()
-```
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
 
 # Графічний Клієнт Compass
 Натисніть сюди, щоб [завантажити](https://www.mongodb.com/download-center/compass)
