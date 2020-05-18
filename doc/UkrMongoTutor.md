@@ -818,10 +818,9 @@ MongoClient.connect(url, function(err, db) {
 ```
 
 Джерела, які були використані в останньому коді:
-*
-[$[\<identifier\>]](https://docs.mongodb.com/master/reference/operator/update/positional-
-filtered/)
-*
+*[$[\<identifier\>]](https://docs.mongodb.com/master/reference/operator/update/positional-
+filtered/)*
+
 [db.collection.updateOne](https://docs.mongodb.com/manual/reference/method/db.collection.updateOne/)
 
 **Результат:** ми видалили `"convmonk@gmail.com"` і змінили `"address"` поля
