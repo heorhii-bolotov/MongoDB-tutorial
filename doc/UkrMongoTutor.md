@@ -211,22 +211,6 @@ _Вкладка Hostname_
 
 ![](https://university-courses.s3.amazonaws.com/M001/Compass_more_options_connection.png)
 
-# Графічний Клієнт Compass
-Натисніть сюди, щоб [завантажити](https://www.mongodb.com/download-center/compass)
-
-Після установки за посиланням ми встановлюємо нове З'єднання, усі поля
-встановлюються за замовчуванням.
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass1.png)
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass2.png)
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass3.png)
-
-# Зверніть увагу, що mongod повинен працювати, інакше Компас не під'єднається
-
-![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/connection.png)
-
 # Встановлення Mongodb на Mac
 
 MongoDB - це база даних документів, яка належить до сімейства баз даних під
@@ -294,6 +278,22 @@ db.users.save( { name: "Tom" } )
 db.users.find()
 ```
 ![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/test1.png)
+
+# Графічний Клієнт Compass
+Натисніть сюди, щоб [завантажити](https://www.mongodb.com/download-center/compass)
+
+Після установки за посиланням ми встановлюємо нове З'єднання, усі поля
+встановлюються за замовчуванням.
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass1.png)
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass2.png)
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/compass3.png)
+
+# Зверніть увагу, що mongod повинен працювати, інакше Компас не під'єднається
+
+![](https://github.com/BeefMILF/MongoDB-tutorial/raw/master/doc/photos/connection.png)
 
 # Базові команди для роботи з MongoDB
 
