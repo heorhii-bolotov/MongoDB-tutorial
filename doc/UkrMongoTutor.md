@@ -581,7 +581,7 @@ db.inventory.update( { "carrier.fee": { $gte: 2 } }, { $set: { price: 9.99 } } )
 
 ### $elemMatch (query)
 
-_**Syntax: { <field>: { $elemMatch: { <query1>, <query2>, ... } } }**_
+_**Syntax: { <field>: { $elemMatch: {<query1>,<query2>, ... } } }**_
  
 Враховуючи такі документи в колекції: 
 
