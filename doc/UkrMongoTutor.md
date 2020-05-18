@@ -1222,12 +1222,12 @@ _Зауважте, що ми зазвичай не рекомендуємо ві
 [Jest MongoDB](https://github.com/shelfio/jest-mongodb) забезпечує всю необхідну конфігурацію для запуску тестів за допомогою MongoDB.
 
 1. Спочатку встановіть @shelf/jest-mongodb
-```
+```js
 yarn add @shelf/jest-mongodb --dev
 ```
 
 2. Вкажіть попередньо встановлене налаштування в Jest-конфігурації:
-```
+```js
 {
   "preset": "@shelf/jest-mongodb"
 }
@@ -1235,7 +1235,7 @@ yarn add @shelf/jest-mongodb --dev
 ```
 
 3. Напишіть свій тест:
-```
+```js
 const {MongoClient} = require('mongodb');
 
 describe('insert', () => {
